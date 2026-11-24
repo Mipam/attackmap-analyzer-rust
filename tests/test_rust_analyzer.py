@@ -700,3 +700,17 @@ def test_jwt_hint_from_verifying_decode(tmp_path: Path, call: str) -> None:
     )
     hints = [h for h in RustAnalyzer().analyze(tmp_path).auth_hints if h.hint == "jwt"]
     assert [h.line for h in hints] == [2]
+
+
+# ---------- SDK v2 extraction protocol declaration (AR082 / AC-403) ----------
+
+
+def test_declares_extraction_protocol_2_0() -> None:
+    from attackmap.sdk.analyzer_contracts import declared_extraction_protocol
+
+    analyzer = RustAnalyzer()
+    # Explicit declaration: pinned on the class, not inherited from the SDK default.
+    assert analyzer.EXTRACTION_PROTOCOL_VERSION == "2.0"
+    assert declared_extraction_protocol(analyzer) == "2.0"
+    # Compat: protocol 1.0 payloads still load via core's v1 adapter
+    # (attackmap.extraction.adapters); declaring "2.0" removes no v1 support.

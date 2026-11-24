@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- SDK v2: declare extraction protocol 2.0 (AR082 / AC-403). The analyzer now pins
+  `EXTRACTION_PROTOCOL_VERSION = "2.0"`, which core's `declared_extraction_protocol()`
+  reports instead of the inherited SDK default, and depends on `attackmap>=1.5.1,<2.0.0`.
+  Protocol 1.0 payloads still load via core's v1 adapter (`attackmap.extraction.adapters`);
+  no v1 compatibility is removed.
+
 ## [0.2.1] - 2026-11-14
 
 ### Changed — packaging
